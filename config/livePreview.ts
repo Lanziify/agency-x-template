@@ -3,5 +3,5 @@ import { getClientSideURL } from '@lib/getURL';
 
 export const livePreview: RootLivePreviewConfig = {
   url: getClientSideURL(),
-  collections: [],
+  collections: ['news'],
 };
