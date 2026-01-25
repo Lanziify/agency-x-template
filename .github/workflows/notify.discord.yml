@@ -3,8 +3,9 @@ name: Discord Commit Notifier
 on:
   push:
     branches:
-      - '**'
-    flow_dispatch:
+      - 'main'
+      - 'develop'
+  workflow_dispatch:
 
 jobs:
   notify-discord:
@@ -14,7 +15,7 @@ jobs:
         run: |
           curl -H "Content-Type: application/json" \
             -X POST \
-            -d "{\"content\": \"New commit by $GITHUB_ACTOR on branch ${GITHUB_REF#refs/heads/}:\nCommit: $GITHUB_SHA\nMessage: ${{ steps.commit.outputs.message }}\"}" \
+            -d "{\"content\": \"New commit by $GITHUB_ACTOR on branch ${GITHUB_REF#refs/heads/}\nCommit: $GITHUB_SHA\"}" \
             $DISCORD_WEBHOOK_URL
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
