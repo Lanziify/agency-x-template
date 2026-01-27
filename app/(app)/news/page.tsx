@@ -1,66 +1,69 @@
-import Image from 'next/image';
-import {
-  Item,
-  ItemContent,
-  ItemGroup,
-  ItemHeader,
-  ItemTitle,
-} from '@/components/ui/item';
-import { Media } from '@/payload-types';
-import configPromise from '@payload-config';
 import { getPayload } from 'payload';
-import { RichText } from '@payloadcms/richtext-lexical/react';
-import { formatDistance } from 'date-fns';
+import configPromise from '@payload-config';
+import { Item, ItemGroup } from '@/components/ui/item';
+import { NewsItem } from '@/features/news/components/NewsItem';
+import Link from 'next/link';
 
-export const Page = async () => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
+type PageProps = {
+	searchParams?: Record<string, string> | undefined;
+};
 
-  const posts = await payload.find({
-    collection: 'news',
-    limit: 50,
-    depth: 1,
-  });
+export const Page = async ({ searchParams }: PageProps) => {
+	const categorySlug = (await searchParams)?.category;
 
-  return (
-    <div>
-      <div className="max-w-4xl mx-auto">
-        <ItemGroup className="grid grid-cols-4 gap-4">
-          {posts.docs.map((post) => (
-            <Item key={post.id} variant="outline" asChild>
-              <a href={`/news/${post.slug}`}>
-                <ItemHeader>
-                  <Image
-                    src={
-                      (post.thumbnail as Media)?.url ||
-                      'https://placehold.co/128x128.png'
-                    }
-                    alt={(post.thumbnail as Media)?.alt || ''}
-                    width={128}
-                    height={128}
-                    className="aspect-square w-full rounded-sm object-cover"
-                  />
-                </ItemHeader>
-                <ItemContent>
-                  <p className="text-sm text-muted-foreground">
-                    {formatDistance(new Date(post.createdAt), new Date(), {
-                      addSuffix: true,
-                    })}
-                  </p>
-                  <ItemTitle>{post.title}</ItemTitle>
-                  <RichText
-                    data={post.content}
-                    className="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance"
-                  />
-                </ItemContent>
-              </a>
-            </Item>
-          ))}
-        </ItemGroup>
-      </div>
-    </div>
-  );
+	const payload = await getPayload({
+		config: configPromise,
+	});
+
+	const categories = await payload.find({
+		collection: 'categories',
+		where: {
+			type: {
+				equals: 'news',
+			},
+		},
+		limit: 0,
+	});
+
+	const postWhere = categorySlug
+		? { 'categories.slug': { equals: categorySlug } }
+		: undefined;
+
+	const posts = await payload.find({
+		collection: 'news',
+		where: postWhere,
+		limit: 50,
+		depth: 1,
+	});
+
+	return (
+		<div>
+			<div className="max-w-4xl mx-auto">
+				<ItemGroup className="col-span-full flex flex-row gap-3 mb-6">
+					<Item asChild variant="outline" size="sm">
+						<Link href="/news" className="text-sm font-medium">
+							All
+						</Link>
+					</Item>
+					{categories.docs.map((category) => (
+						<Item key={category.id} asChild variant="outline" size="sm">
+							<Link
+								href={`/news?category=${category.slug}`}
+								className="text-sm font-medium"
+							>
+								{category.title}
+							</Link>
+						</Item>
+					))}
+				</ItemGroup>
+				<ItemGroup className="grid grid-cols-4 gap-4">
+					{posts.docs.map((post) => (
+						<NewsItem post={post} key={post.id} variant="outline" asChild />
+					))}
+				</ItemGroup>
+			</div>
+		</div>
+	);
 };
 
 export default Page;

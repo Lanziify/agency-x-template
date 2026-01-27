@@ -88,7 +88,6 @@ export const News: CollectionConfig<'news'> = {
 					name: 'categories',
 					type: 'relationship',
 					relationTo: 'categories',
-					hasMany: true,
 					admin: {
 						description: 'Select news categories',
 					},
@@ -100,6 +99,7 @@ export const News: CollectionConfig<'news'> = {
 					name: 'tags',
 					type: 'relationship',
 					relationTo: 'tags',
+					hasMany: true,
 					admin: {
 						description: 'Select relevant tags',
 					},
