@@ -46,7 +46,7 @@ export const Page = async ({ searchParams }: PageProps) => {
   const posts = await payload.find({
     collection: 'news',
     where: postWhere,
-    limit: 1,
+    limit: 20,
     depth: 1,
     page: paginationPage,
   });
