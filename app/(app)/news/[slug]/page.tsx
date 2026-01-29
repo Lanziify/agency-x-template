@@ -1,43 +1,21 @@
-import { Badge } from '@/components/ui/badge';
-import { ItemGroup } from '@/components/ui/item';
-import { Tag } from '@/config/payload.types';
-import { NewsItem } from '@/features/news/components/NewsItem';
-import { payload } from '@/lib/payload';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import { notFound } from 'next/navigation';
+import { CollectionSlug } from 'payload';
+import { RichText } from '@payloadcms/richtext-lexical/react';
+import { Badge } from '@components/ui/badge';
+import { ItemGroup } from '@components/ui/item';
+import { NewsItem } from '@features/news/components/NewsItem';
+import { getNewsBySlug } from '@features/news/queries/getNewsBySlug';
+import { getRelatedNewsPost } from '@features/news/queries/getRelatedNewsPost';
+import { Tag } from '@config/payload.types';
 
 export default async function SlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const result = await payload.find({
-    collection: 'news',
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-    depth: 2,
-    limit: 1,
-  });
+  const post = await getNewsBySlug(slug as CollectionSlug);
 
-  const post = result.docs[0];
+  if (!post) return notFound();
 
-  const relatedPost = await payload.find({
-    collection: 'news',
-    where: {
-      tags: {
-        in: (post.tags as Tag[]).map((tag) => tag.id),
-      },
-      id: {
-        not_equals: result.docs[0].id,
-      },
-    },
-    limit: 5,
-  });
-
-  if (!post) {
-    return notFound();
-  }
+  const relatedPost = await getRelatedNewsPost(post);
 
   return (
     <article className="mx-auto max-w-3xl py-10">
@@ -47,7 +25,9 @@ export default async function SlugPage({ params }: { params: Promise<{ slug: str
       </div>
       <div className="mb-6 flex flex-wrap gap-2">
         {(post.tags as Tag[]).map((tag) => (
-          <Badge key={tag.id} className="rounded-sm">{tag.title}</Badge>
+          <Badge key={tag.id} className="rounded-sm">
+            {tag.title}
+          </Badge>
         ))}
       </div>
       {relatedPost.totalDocs > 0 && (
