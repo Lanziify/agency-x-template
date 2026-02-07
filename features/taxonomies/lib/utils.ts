@@ -1,4 +1,4 @@
-import { collections } from '@/config/collections';
+import { collections } from '@config/collections';
 import { OptionObject } from 'payload';
 
 export const getCMSCollections = (): OptionObject[] => {
