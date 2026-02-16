@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@components/ui/button';
 import { Checkbox } from '@components/ui/checkbox';
 import { Field, FieldDescription, FieldError, FieldLabel } from '@components/ui/field';
@@ -16,6 +16,9 @@ import { formSchema } from '../schemas/contact';
 export default function ContacForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      privacy_policy: false,
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -58,27 +61,45 @@ export default function ContacForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 max-w-3xl mx-auto py-10">
         <Field>
-          <FieldLabel htmlFor="name">Name</FieldLabel>
+          <FieldLabel htmlFor="name" required>
+            Name
+          </FieldLabel>
           <Input id="name" placeholder="John Doe" {...form.register('name')} />
-          <FieldDescription>Let us know who you are.</FieldDescription>
           <FieldError>{form.formState.errors.name?.message}</FieldError>
         </Field>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel htmlFor="email" required>
+            Email
+          </FieldLabel>
           <Input id="email" placeholder="yourname@example.com" {...form.register('email')} />
 
           <FieldError>{form.formState.errors.email?.message}</FieldError>
         </Field>
         <Field>
-          <FieldLabel htmlFor="message">message</FieldLabel>
+          <FieldLabel htmlFor="message" required>
+            message
+          </FieldLabel>
           <Textarea id="message" placeholder="Let us know what's on your mind." {...form.register('message')} />
 
           <FieldError>{form.formState.errors.message?.message}</FieldError>
         </Field>
-        <Field className="mb-4 flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-          <Checkbox id="privacy_policy" {...form.register('privacy_policy')} className="flex-0 aspect-square" />
+        <Field className="mb-4 flex flex-row items-start space-x-3 space-y-0 py-4">
+          <Controller
+            name="privacy_policy"
+            control={form.control}
+            render={({ field }) => (
+              <Checkbox
+                id="privacy_policy"
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                className="flex-0 aspect-square my-1 mx-0"
+              />
+            )}
+          />
           <div className="space-y-1 leading-none">
-            <FieldLabel htmlFor="privacy_policy">I agree to the terms</FieldLabel>
+            <FieldLabel htmlFor="privacy_policy" required>
+              I agree to the terms
+            </FieldLabel>
             <FieldDescription>
               We respect your privacy. Any information you share with us is used only to improve your experience and is kept safe.
             </FieldDescription>

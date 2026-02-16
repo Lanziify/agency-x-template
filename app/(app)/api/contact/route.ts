@@ -1,36 +1,30 @@
 import { formSchema as contactFormSchema } from '@features/contact/schemas/contact';
-import { MailDataRequired } from '@sendgrid/mail';
+import { MailOptions } from 'nodemailer/lib/json-transport';
 import { NextRequest, NextResponse } from 'next/server';
+import { transporter } from '@features/contact/service/email';
 import { withApiHandler } from '@lib/handleApiError';
-import sgMail from '@lib/sg';
 
 export const POST = withApiHandler(async (req: NextRequest) => {
   const body = await req.json();
   const data = contactFormSchema.parse(body);
 
-  const adminMail: MailDataRequired = {
+  const adminMail: MailOptions = {
     from: process.env.ADMIN_MAIL!,
     replyTo: data.email,
     to: process.env.REPLY_MAIL!,
     subject: `New message from ${data.name}`,
     text: data.message,
-    mailSettings: {
-      sandboxMode: { enable: true },
-    },
   };
 
-  const clientMail: MailDataRequired = {
+  const clientMail: MailOptions = {
     from: process.env.ADMIN_MAIL!,
     replyTo: process.env.REPLY_MAIL!,
     to: data.email,
     subject: 'We received your message!',
     text: `Hi ${data.name},\n\nThanks for reaching out! We've received your message and will get back to you as soon as possible.\n\n— ${process.env.APP_NAME || 'Our Team'}`,
-    mailSettings: {
-      sandboxMode: { enable: true },
-    },
   };
 
-  await Promise.all([sgMail.send(adminMail), sgMail.send(clientMail)]);
+  await Promise.all([transporter.sendMail(adminMail), transporter.sendMail(clientMail)]);
 
   return NextResponse.json(
     {
