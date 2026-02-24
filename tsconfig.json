@@ -24,6 +24,7 @@
       "@payload-config": ["./config/payload.config.ts"],
       "@app/*": ["./app/(app)/*"],
       "@collections/*": ["./app/collections/*"],
+      "@blocks/*": ["./app/blocks/*"],
       "@components/*": ["./components/*"],
       "@features/*": ["./features/*"],
       "@lib/*": ["./lib/*"],

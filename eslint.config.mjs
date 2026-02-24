@@ -36,7 +36,7 @@ const eslintConfig = defineConfig([
         },
         {
           type: 'shared',
-          pattern: ['app/collections/**', 'components/**/*', 'lib/**'],
+          pattern: ['app/collections/**', 'app/blocks/**/*', 'components/**/*', 'lib/**'],
         },
         {
           type: 'app',

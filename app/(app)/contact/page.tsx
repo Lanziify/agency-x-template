@@ -1,11 +1,28 @@
+import React from 'react';
+import { BlockRenderer } from '@components/shared/blocks';
 import { SonnerProvider } from '@components/ui/sonner-provider';
-import ContacForm from '@features/contact/components/form';
+import { payload } from '@lib/payload';
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const result = await payload.find({
+    collection: 'contacts',
+    // where: {
+    //   active: {
+    //     equals: true,
+    //   },
+    // },
+    // limit: 1,
+    depth: 1,
+  });
+
+  const blockResult = result.docs[0];
+
+  if (!blockResult) return;
+
   return (
-    <div>
-      <ContacForm />
+    <React.Fragment>
+      <BlockRenderer blocks={blockResult.form} />
       <SonnerProvider position="top-center" />
-    </div>
+    </React.Fragment>
   );
 }

@@ -15,6 +15,7 @@
     "@payloadcms/(.*)$",
     "@app/(.*)$",
     "@collections/(.*)$",
+    "@blocks/(.*)$",
     "@components/(.*)$",
     "@features/(.*)/components/(.*)$",
     "@features/(.*)/lib/(.*)$",
