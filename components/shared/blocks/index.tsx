@@ -14,7 +14,7 @@ type BlockRendererProps<T extends BlockType> = {
   blocks: BlockProps<T>[];
 };
 
-export const BlockRenderer = <T extends BlockType>({ blocks }: BlockRendererProps<T>) => {
+const BlockRenderer = <T extends BlockType>({ blocks }: BlockRendererProps<T>) => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
   if (!hasBlocks) return null;
@@ -24,11 +24,9 @@ export const BlockRenderer = <T extends BlockType>({ blocks }: BlockRendererProp
       {blocks.map((block, index) => {
         const { blockType } = block;
 
-        const isFormBlock = blockType === 'formBlock';
-
         if (blockType && blockType in blockMap) {
-            const BlockComponent = blockMap[blockType];
-            return <BlockComponent key={index} {...block} />;
+          const BlockComponent = blockMap[blockType];
+          return <BlockComponent key={index} {...block} />;
         }
 
         return null;
@@ -36,3 +34,5 @@ export const BlockRenderer = <T extends BlockType>({ blocks }: BlockRendererProp
     </React.Fragment>
   );
 };
+
+export { BlockRenderer };

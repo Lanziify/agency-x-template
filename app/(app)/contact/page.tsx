@@ -2,6 +2,7 @@ import React from 'react';
 import { BlockRenderer } from '@components/shared/blocks';
 import { SonnerProvider } from '@components/ui/sonner-provider';
 import { payload } from '@lib/payload';
+import { Contact, Form } from '@config/payload.types';
 
 export default async function ContactPage() {
   const result = await payload.find({
@@ -21,7 +22,7 @@ export default async function ContactPage() {
 
   return (
     <React.Fragment>
-      <BlockRenderer blocks={blockResult.form} />
+      <BlockRenderer blocks={blockResult.form as Extract<Contact, 'form'>} />
       <SonnerProvider position="top-center" />
     </React.Fragment>
   );
