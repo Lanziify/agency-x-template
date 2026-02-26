@@ -1,10 +1,11 @@
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
+import { Email, Text, TextArea } from '@blocks/fields';
 
 export const formBuilder = formBuilderPlugin({
   fields: {
-    text: true,
-    email: true,
-    textarea: true,
+    text: Text,
+    email: Email,
+    textarea: TextArea,
     checkbox: false,
     date: false,
     number: false,

@@ -7,6 +7,7 @@ import { plugins } from './plugins';
 import { livePreview } from './livePreview';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import email from '@lib/email';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,6 +15,7 @@ const __dirname = path.dirname(__filename);
 export default buildConfig({
   editor,
   collections,
+  email,
   plugins,
   secret: process.env.PAYLOAD_SECRET || '',
   db: postgresAdapter({

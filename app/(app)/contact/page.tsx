@@ -2,17 +2,11 @@ import React from 'react';
 import { BlockRenderer } from '@components/shared/blocks';
 import { SonnerProvider } from '@components/ui/sonner-provider';
 import { payload } from '@lib/payload';
-import { Contact, Form } from '@config/payload.types';
+import { Contact } from '@config/payload.types';
 
 export default async function ContactPage() {
   const result = await payload.find({
     collection: 'contacts',
-    // where: {
-    //   active: {
-    //     equals: true,
-    //   },
-    // },
-    // limit: 1,
     depth: 1,
   });
 

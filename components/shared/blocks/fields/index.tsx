@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { FieldType } from '@blocks/form/fields';
-import { FieldError, FieldLabel } from '@components/ui/field';
+import { Field, FieldError, FieldLabel } from '@components/ui/field';
 import { Input } from '@components/ui/input';
 import { Textarea } from '@components/ui/textarea';
-import { Width } from './width';
+
+const Width: React.FC<{ children: React.ReactNode; width?: number | null }> = ({ children, width }) => {
+  return <Field style={{ flex: 1, flexBasis: width ? `calc(${width}% - var(--spacing) * 4)` : '100%' }}>{children}</Field>;
+};
 
 const Text: React.FC<
   FieldType<'text'> & {
     form: UseFormReturn<any & FieldValues>;
   }
-> = ({ width, name, label, required, form }) => {
+> = ({ width, name, label, required, errorMessage, form }) => {
   const error = form.formState.errors[name];
 
   return (
@@ -18,7 +21,7 @@ const Text: React.FC<
       <FieldLabel htmlFor={name} required={!!required}>
         {label}
       </FieldLabel>
-      <Input id={name} {...form.register(name, { required: !!required })} />
+      <Input id={name} {...form.register(name, { required: !!errorMessage && String(errorMessage) })} />
       <FieldError>{error?.message as string}</FieldError>
     </Width>
   );
@@ -28,7 +31,7 @@ const Email: React.FC<
   FieldType<'email'> & {
     form: UseFormReturn<any & FieldValues>;
   }
-> = ({ width, name, label, required, form }) => {
+> = ({ width, name, label, required, errorMessage, form }) => {
   const error = form.formState.errors[name];
 
   return (
@@ -36,7 +39,7 @@ const Email: React.FC<
       <FieldLabel htmlFor={name} required={!!required}>
         {label}
       </FieldLabel>
-      <Input id={name} {...form.register(name, { required: !!required })} />
+      <Input id={name} {...form.register(name, { required: !!errorMessage && String(errorMessage) })} />
       <FieldError>{error?.message as string}</FieldError>
     </Width>
   );
@@ -46,7 +49,7 @@ const TextArea: React.FC<
   FieldType<'textarea'> & {
     form: UseFormReturn<any & FieldValues>;
   }
-> = ({ width, name, label, required, form }) => {
+> = ({ width, name, label, required, errorMessage, form }) => {
   const error = form.formState.errors[name];
 
   return (
@@ -54,7 +57,7 @@ const TextArea: React.FC<
       <FieldLabel htmlFor={name} required={!!required}>
         {label}
       </FieldLabel>
-      <Textarea id={name} {...form.register(name, { required: !!required })} />
+      <Textarea id={name} {...form.register(name, { required: !!errorMessage && String(errorMessage) })} />
       <FieldError>{error?.message as string}</FieldError>
     </Width>
   );

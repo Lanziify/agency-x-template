@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import nodemailerSendgrid from 'nodemailer-sendgrid';
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
 
 export const transporter =
   process.env.NODE_ENV === 'development'
@@ -17,3 +18,11 @@ export const transporter =
           apiKey: process.env.SENDGRID_API_KEY!,
         })
       );
+
+const email = nodemailerAdapter({
+  defaultFromAddress: process.env.ADMIN_MAIL!,
+  defaultFromName: process.env.APP_NAME!,
+  transport: transporter,
+});
+
+export default email
