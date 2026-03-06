@@ -20,9 +20,9 @@ export const transporter =
       );
 
 const email = nodemailerAdapter({
-  defaultFromAddress: process.env.ADMIN_MAIL!,
-  defaultFromName: process.env.APP_NAME!,
+  defaultFromAddress: process.env.ADMIN_FROM_MAIL!,
+  defaultFromName: process.env.ADMIN_FROM_NAME!,
   transport: transporter,
 });
 
-export default email
+export default email;

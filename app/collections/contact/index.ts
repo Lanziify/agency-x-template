@@ -21,7 +21,34 @@ export const Contact: CollectionConfig = {
             {
               type: 'blocks',
               name: 'form',
+              label: 'Form Template',
+              admin: {
+                description: 'Select a form template to use in contact page',
+              },
               blocks: [FormBlock],
+              required: true,
+            },
+            {
+              type: 'richText',
+              name: 'introduction',
+              label: 'Introduction',
+              admin: {
+                description: 'Introductory text displayed above the contact form',
+              },
+              required: false,
+            },
+          ],
+        },
+        {
+          label: 'Settings',
+          fields: [
+            {
+              type: 'checkbox',
+              name: 'recaptcha',
+              label: 'Enable reCAPTCHA',
+              admin: {
+                description: 'Protect form submissions from spam with Google reCAPTCHA v3',
+              },
               required: true,
             },
           ],

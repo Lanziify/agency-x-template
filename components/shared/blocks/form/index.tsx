@@ -1,15 +1,17 @@
 'use client';
 
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { toast } from 'sonner';
 import React from 'react';
+import { GoogleReCaptcha, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { FieldValues, UseFormReturn, useForm } from 'react-hook-form';
 import { buildInitialFormState } from '@blocks/form/buildInitialFormState';
 import { FieldType, fields } from '@blocks/form/fields';
 import { Button } from '@components/ui/button';
 import { Form } from '@components/ui/form';
 import { safeCatch } from '@lib/safeCatch';
-import { FormSubmission, Form as PayloadForm } from '@config/payload.types';
+import { Form as PayloadForm } from '@config/payload.types';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
 export type FormBlockProps = {
   form: PayloadForm;
@@ -23,10 +25,20 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
     form: formFromProps,
     form: { id: formID, fields: fieldBlocks },
   } = props;
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [recaptchaToken, setRecaptchaToken] = React.useState<string | null>(null);
 
   const form = useForm({
     defaultValues: buildInitialFormState(formFromProps.fields),
   });
+
+  const handleRecaptchaVerify = React.useCallback(async () => {
+    if (!executeRecaptcha) return;
+
+    const token = await executeRecaptcha('contact_form');
+
+    setRecaptchaToken(token);
+  }, [executeRecaptcha]);
 
   const onSubmit = async (values: FieldValues) => {
     const transformedData = Object.entries(values).map(([name, value]) => ({
@@ -34,27 +46,38 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
       value,
     }));
 
+    transformedData.push({ field: 'recaptchaToken', value: recaptchaToken });
+
     toast.promise(
       async () => {
-        const { data, error } = await safeCatch<FormSubmission, AxiosError>(async () => {
+        const { data, error } = await safeCatch(async () => {
           return await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/form-submissions`, {
             form: formID,
             submissionData: transformedData,
           });
         });
 
-        if (!data && error) throw error;
+        if (error) throw error;
+
+        console.log(data);
+
+        return data;
       },
       {
         loading: 'Submitting...',
-        success: () => ({
-          message: <strong>Your email has been sent! 🎉</strong>,
+        success: (data) => ({
+          message: <RichText data={data?.data.doc.form.confirmationMessage}/>,
         }),
         error: async (error) => {
           if (axios.isAxiosError(error)) {
+            // let errorCodes: string[] = [];
+            // if (error.response?.data.errors[0].data) {
+            //   errorCodes = (error.response?.data.errors[0].data.errorCodes as Array<Record<string, string>>).map((code) => code?.message);
+            // }
+
             return {
-              message: 'An error has occurred while trying to send your request.',
-              description: error.response?.data?.message ?? error.message,
+              message: error.response?.data.errors[0].message,
+              // description: errorCodes.length > 0 ? errorCodes.toString() : '',
             };
           }
 
@@ -70,7 +93,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-3xl mx-auto py-10">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 border p-4 rounded-md">
           <div className="flex flex-wrap gap-4">
             {fieldBlocks?.map((field, index) => {
               const FieldBlockComponent = fields[field.blockType] as React.FC<
@@ -89,6 +112,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
               return null;
             })}
           </div>
+          <GoogleReCaptcha onVerify={handleRecaptchaVerify} />
           <Button>{(formFromProps as PayloadForm).submitButtonLabel}</Button>
         </form>
       </Form>
