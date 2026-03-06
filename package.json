@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "payload:generate": "npx payload generate:importmap && npx payload generate:types",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

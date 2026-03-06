@@ -9,7 +9,7 @@ export default function RecaptchaProvider({ children }: { children: React.ReactN
       container={{
         element: 'contact-recaptcha',
         parameters: {
-          badge: 'inline',
+          badge: 'bottomright',
         },
       }}>
       {children}

@@ -5,13 +5,13 @@ import { toast } from 'sonner';
 import React from 'react';
 import { GoogleReCaptcha, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { FieldValues, UseFormReturn, useForm } from 'react-hook-form';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 import { buildInitialFormState } from '@blocks/form/buildInitialFormState';
 import { FieldType, fields } from '@blocks/form/fields';
 import { Button } from '@components/ui/button';
 import { Form } from '@components/ui/form';
 import { safeCatch } from '@lib/safeCatch';
 import { Form as PayloadForm } from '@config/payload.types';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 
 export type FormBlockProps = {
   form: PayloadForm;
@@ -93,7 +93,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 border p-4 rounded-md">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex flex-wrap gap-4">
             {fieldBlocks?.map((field, index) => {
               const FieldBlockComponent = fields[field.blockType] as React.FC<
