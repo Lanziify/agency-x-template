@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { FormBlock } from './form';
 
 const blockMap = {

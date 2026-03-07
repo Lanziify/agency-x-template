@@ -1,5 +1,6 @@
-import { User } from '@config/payload.types';
 import { Access, AccessArgs } from 'payload';
+
+import { User } from '@config/payload.types';
 
 type isAuthenticated = (args: AccessArgs<User>) => boolean;
 

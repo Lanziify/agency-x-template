@@ -10,8 +10,5 @@ export const BlockRenderer = <T,>({ blocks }: BlockRendererProps<T>) => {
 
   if (!hasBlocks) return null;
 
-  return (
-    <React.Fragment>
-    </React.Fragment>
-  );
+  return <React.Fragment></React.Fragment>;
 };

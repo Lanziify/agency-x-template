@@ -1,5 +1,6 @@
 import { getPayload } from 'payload';
 import configPromise from '@payload-config';
+
 import { News, Tag } from '@config/payload.types';
 
 const payload = await getPayload({

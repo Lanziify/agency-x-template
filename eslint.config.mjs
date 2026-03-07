@@ -1,7 +1,9 @@
+import tseslint from '@typescript-eslint/eslint-plugin';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import boundaries from 'eslint-plugin-boundaries';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -17,6 +19,8 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       boundaries: boundaries,
+      simpleImportSort: simpleImportSort,
+      tseslint: tseslint,
     },
     settings: {
       'import/resolver': {
@@ -76,11 +80,7 @@ const eslintConfig = defineConfig([
             { from: 'config', allow: ['shared', 'feature'] },
             {
               from: ['feature'],
-              allow: [
-                'shared',
-                ['feature', { featureName: '${from.featureName}' }],
-                'config'
-              ],
+              allow: ['shared', ['feature', { featureName: '${from.featureName}' }], 'config'],
             },
             {
               from: ['app', 'neverImport'],
@@ -89,6 +89,32 @@ const eslintConfig = defineConfig([
           ],
         },
       ],
+      'simpleImportSort/imports': [
+        'error',
+        {
+          groups: [
+            ['^react', '^next'],
+            ['^payload', '^@payload'],
+            ['^@app'],
+            ['^@collections'],
+            ['^@blocks'],
+            ['^@components'],
+            ['^@features'],
+            ['^@lib'],
+            ['^@config'],
+            ['^\\u0000'],
+            ['^\\.'],
+          ],
+        },
+      ],
+      'simpleImportSort/exports': 'error',
+    },
+  },
+  {
+    files: ['**/importMap.js', '**/*.generated.ts', '**/payload.types.ts'],
+    rules: {
+      'simpleImportSort/imports': 'off',
+      'simpleImportSort/exports': 'off',
     },
   },
 ]);

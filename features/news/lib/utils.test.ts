@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vitest';
 import { buildPaginationUrl } from './utils';
+
+import { describe, expect, it } from 'vitest';
 
 describe('buildPaginationUrl', () => {
   it('return base path when no params', () => {

@@ -1,4 +1,5 @@
 import { type CollectionConfig } from 'payload';
+
 import { FormBlock } from '@blocks/form';
 
 export const Contact: CollectionConfig = {

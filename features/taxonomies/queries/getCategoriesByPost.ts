@@ -1,5 +1,5 @@
-import configPromise from '@payload-config';
 import { CollectionConfig, CollectionSlug, getPayload } from 'payload';
+import configPromise from '@payload-config';
 
 const payload = await getPayload({
   config: configPromise,

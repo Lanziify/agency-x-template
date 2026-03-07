@@ -1,10 +1,15 @@
-import { formatDistance } from 'date-fns';
 import React from 'react';
 import Image from 'next/image';
+
 import { RichText } from '@payloadcms/richtext-lexical/react';
+
 import { Item, ItemContent, ItemHeader, ItemTitle } from '@components/ui/item';
+
 import { cn } from '@lib/utils';
+
 import { Media, News } from '@config/payload.types';
+
+import { formatDistance } from 'date-fns';
 
 type ItemBaseProps = React.ComponentProps<typeof Item>;
 
@@ -26,7 +31,7 @@ const NewsItem: React.FC<NewsItemProps> = ({ className, variant = 'default', siz
           />
         </ItemHeader>
         <ItemContent>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {formatDistance(new Date(post.createdAt), new Date(), {
               addSuffix: true,
             })}

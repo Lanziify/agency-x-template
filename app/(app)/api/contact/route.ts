@@ -1,8 +1,11 @@
-import { formSchema as contactFormSchema } from '@features/contact/schemas/contact';
-import { MailOptions } from 'nodemailer/lib/json-transport';
 import { NextRequest, NextResponse } from 'next/server';
+
+import { formSchema as contactFormSchema } from '@features/contact/schemas/contact';
+
 import { transporter } from '@lib/email';
 import { withApiHandler } from '@lib/handleApiError';
+
+import { MailOptions } from 'nodemailer/lib/json-transport';
 
 export const POST = withApiHandler(async (req: NextRequest) => {
   const body = await req.json();
