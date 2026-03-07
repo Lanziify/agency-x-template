@@ -110,6 +110,13 @@ const eslintConfig = defineConfig([
       'simpleImportSort/exports': 'error',
     },
   },
+  {
+    files: ['**/importMap.js', '**/*.generated.ts', '**/payload.types.ts'],
+    rules: {
+      'simpleImportSort/imports': 'off',
+      'simpleImportSort/exports': 'off',
+    },
+  },
 ]);
 
 export default eslintConfig;
