@@ -2,7 +2,6 @@ services:
   db:
     image: postgres:16
     container_name: ${APP_NAME}-postgres
-    restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -14,7 +13,6 @@ services:
   adminer:
     image: adminer
     container_name: ${APP_NAME}-adminer
-    restart: always
     ports:
       - '${ADMINER_PORT}:8080'
   bucket-storage:
@@ -29,7 +27,21 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - minio-data:/data
+  mailpit:
+        image: axllent/mailpit
+        container_name: ${APP_NAME}-mailpit
+        volumes:
+            - mailpit-data:/data
+        ports:
+            - 8025:8025
+            - '${SMTP_PORT}:1025'
+        environment:
+            MP_MAX_MESSAGES: 5000
+            MP_DATABASE: /data/mailpit.db
+            MP_SMTP_AUTH_ACCEPT_ANY: 1
+            MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
 volumes:
   pgdata:
   minio-data:
+  mailpit-data:
