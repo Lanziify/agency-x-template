@@ -1,17 +1,5 @@
 import { Block, Field } from 'payload';
 
-
-
-
-
-
-
-
-
-
-
-
-
 const name: Field = {
   name: 'name',
   type: 'text',
@@ -90,7 +78,7 @@ const Text: Block = {
       admin: {
         condition: (_, { required }) => Boolean(required),
       },
-      required: true
+      required: true,
     },
   ],
   labels: {
@@ -190,4 +178,4 @@ const TextArea: Block = {
   },
 };
 
-export { Text, Email, TextArea };
+export { Email, Text, TextArea };

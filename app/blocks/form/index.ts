@@ -12,6 +12,6 @@ export const FormBlock: Block = {
       type: 'relationship',
       relationTo: 'forms',
       required: true,
-    }
+    },
   ],
 };

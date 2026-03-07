@@ -1,9 +1,13 @@
-import axios from 'axios';
 import { APIError, Field } from 'payload';
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
+
 import { Email, Text, TextArea } from '@blocks/fields';
+
 import { FormSubmission } from '@config/payload.types';
+
 import { safeCatch } from './safeCatch';
+
+import axios from 'axios';
 
 const reCAPTCHAErrorMap = {
   'missing-input-secret': 'The secret parameter is missing.',
@@ -72,7 +76,7 @@ export const formBuilder = formBuilderPlugin({
         async ({ data }) => {
           const token = (data as FormSubmission & { recaptchaToken: string | null })['recaptchaToken'];
 
-          if (!token) return data
+          if (!token) return data;
 
           const { data: recaptchaVerificationData, error } = await safeCatch(async () => {
             const response = await axios.post<ReCaptchaVerifyResponse>(

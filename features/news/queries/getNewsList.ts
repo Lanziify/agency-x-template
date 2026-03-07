@@ -1,4 +1,4 @@
-import { Where, getPayload } from 'payload';
+import { getPayload, Where } from 'payload';
 import configPromise from '@payload-config';
 
 const payload = await getPayload({

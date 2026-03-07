@@ -1,13 +1,16 @@
-import sharp from 'sharp';
-import { postgresAdapter } from '@payloadcms/db-postgres';
 import { buildConfig } from 'payload';
-import { editor } from './editor';
-import { collections } from './collections';
-import { plugins } from './plugins';
-import { livePreview } from './livePreview';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { postgresAdapter } from '@payloadcms/db-postgres';
+
 import email from '@lib/email';
+
+import { collections } from './collections';
+import { editor } from './editor';
+import { livePreview } from './livePreview';
+import { plugins } from './plugins';
+
+import path from 'path';
+import sharp from 'sharp';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

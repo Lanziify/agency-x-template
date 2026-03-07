@@ -1,4 +1,5 @@
-import { Text, Email, TextArea } from '@components/shared/blocks/fields';
+import { Email, Text, TextArea } from '@components/shared/blocks/fields';
+
 import { Form } from '@config/payload.types';
 
 export type FormField = NonNullable<Form['fields']>[number];
@@ -12,4 +13,4 @@ export const fields = {
   text: Text,
   email: Email,
   textarea: TextArea,
-} as const
+} as const;

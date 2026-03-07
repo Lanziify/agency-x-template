@@ -1,6 +1,7 @@
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
+
 import nodemailer from 'nodemailer';
 import nodemailerSendgrid from 'nodemailer-sendgrid';
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
 
 export const transporter =
   process.env.NODE_ENV === 'development'

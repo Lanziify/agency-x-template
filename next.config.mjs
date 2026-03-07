@@ -1,4 +1,4 @@
-import { withPayload } from '@payloadcms/next/withPayload'
+import { withPayload } from '@payloadcms/next/withPayload';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -6,8 +6,8 @@ const nextConfig = {
     reactCompiler: false,
   },
   images: {
-    domains: ['placehold.co']
-  }
-}
+    domains: ['placehold.co'],
+  },
+};
 
-export default withPayload(nextConfig)
+export default withPayload(nextConfig);

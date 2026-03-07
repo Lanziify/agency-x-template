@@ -1,7 +1,10 @@
 import React from 'react';
+
 import RecaptchaProvider from '@components/shared/providers/recaptcha-provider';
 import { SonnerProvider } from '@components/ui/sonner-provider';
+
 import { ContactForm } from '@features/contact/components/form';
+
 import { payload } from '@lib/payload';
 
 export default async function ContactPage() {
