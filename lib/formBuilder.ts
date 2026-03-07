@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIError } from 'payload';
+import { APIError, Field } from 'payload';
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
 import { Email, Text, TextArea } from '@blocks/fields';
 import { FormSubmission } from '@config/payload.types';
@@ -51,15 +51,28 @@ export const formBuilder = formBuilderPlugin({
     payment: false,
     state: false,
   },
+  formOverrides: {
+    fields: ({ defaultFields }) => {
+      const recaptcha: Field = {
+        type: 'checkbox',
+        name: 'recaptcha',
+        label: 'Enable reCAPTCHA',
+        admin: {
+          description: 'Protect form submissions from spam with Google reCAPTCHA v3',
+        },
+        required: true,
+      };
+
+      return [...defaultFields, recaptcha];
+    },
+  },
   formSubmissionOverrides: {
     hooks: {
       beforeChange: [
         async ({ data }) => {
-          const token = (data as FormSubmission).submissionData?.find((f) => f.field === 'recaptchaToken')?.value;
+          const token = (data as FormSubmission & { recaptchaToken: string | null })['recaptchaToken'];
 
-          if (!token) {
-            throw new APIError('Missing reCAPTCHA token', 400, undefined, true);
-          }
+          if (!token) return data
 
           const { data: recaptchaVerificationData, error } = await safeCatch(async () => {
             const response = await axios.post<ReCaptchaVerifyResponse>(

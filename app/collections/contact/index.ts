@@ -11,7 +11,13 @@ export const Contact: CollectionConfig = {
   },
   fields: [
     { name: 'title', type: 'text', required: true },
-    { name: 'active', type: 'checkbox', defaultValue: false, required: true },
+    {
+      name: 'active',
+      type: 'checkbox',
+      admin: { description: 'Enable this to use this form as your active contact form for receiving messages.' },
+      defaultValue: false,
+      required: true,
+    },
     {
       type: 'tabs',
       tabs: [
@@ -36,20 +42,6 @@ export const Contact: CollectionConfig = {
                 description: 'Introductory text displayed above the contact form',
               },
               required: false,
-            },
-          ],
-        },
-        {
-          label: 'Settings',
-          fields: [
-            {
-              type: 'checkbox',
-              name: 'recaptcha',
-              label: 'Enable reCAPTCHA',
-              admin: {
-                description: 'Protect form submissions from spam with Google reCAPTCHA v3',
-              },
-              required: true,
             },
           ],
         },

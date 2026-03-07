@@ -44,3 +44,4 @@ next-env.d.ts
 # Payload CMS
 payload.types.ts
 importMap.js
+.env*.local

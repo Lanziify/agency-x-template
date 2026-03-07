@@ -35,25 +35,29 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
   const handleRecaptchaVerify = React.useCallback(async () => {
     if (!executeRecaptcha) return;
 
-    const token = await executeRecaptcha('contact_form');
+    const token = await executeRecaptcha(`form_${formID}`);
 
     setRecaptchaToken(token);
-  }, [executeRecaptcha]);
+  }, [executeRecaptcha, formID]);
 
   const onSubmit = async (values: FieldValues) => {
+    if (formFromProps.recaptcha && !executeRecaptcha) {
+      toast.error('reCAPTCHA is still loading. Please try again.');
+      return;
+    }
+
     const transformedData = Object.entries(values).map(([name, value]) => ({
       field: name,
       value,
     }));
 
-    transformedData.push({ field: 'recaptchaToken', value: recaptchaToken });
-
     toast.promise(
       async () => {
         const { data, error } = await safeCatch(async () => {
-          return await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/form-submissions`, {
+          return await axios.post('/api/form-submissions', {
             form: formID,
             submissionData: transformedData,
+            recaptchaToken,
           });
         });
 
@@ -66,7 +70,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
       {
         loading: 'Submitting...',
         success: (data) => ({
-          message: <RichText data={data?.data.doc.form.confirmationMessage}/>,
+          message: <RichText data={data?.data.doc.form.confirmationMessage} />,
         }),
         error: async (error) => {
           if (axios.isAxiosError(error)) {
