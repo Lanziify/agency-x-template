@@ -1,0 +1,45 @@
+name: Deploy Vercel Preview
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy-dev-environment:
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://develop.agency-x.lanziify.site
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Generate Payload Imports and Types
+        run: npm run payload:generate
+
+      - name: Pull Vercel preview environment
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Vercel output
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy prebuilt output
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
