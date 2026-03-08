@@ -122,7 +122,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
               return null;
             })}
           </div>
-          <GoogleReCaptcha onVerify={handleRecaptchaVerify} />
+          {formFromProps.recaptcha && <GoogleReCaptcha onVerify={handleRecaptchaVerify} />}
           <Button>{(formFromProps as PayloadForm).submitButtonLabel}</Button>
         </form>
       </Form>
