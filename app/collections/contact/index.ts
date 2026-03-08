@@ -1,6 +1,7 @@
 import { type CollectionConfig } from 'payload';
 
 import { FormBlock } from '@blocks/form';
+import { HeroBlock } from '@blocks/layout/hero';
 
 export const Contact: CollectionConfig = {
   slug: 'contacts',
@@ -32,7 +33,7 @@ export const Contact: CollectionConfig = {
               admin: {
                 description: 'Select a form template to use in contact page',
               },
-              blocks: [FormBlock],
+              blocks: [HeroBlock ,FormBlock],
               required: true,
             },
             {

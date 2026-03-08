@@ -14,39 +14,38 @@ import { Form } from '@components/ui/form';
 
 import { safeCatch } from '@lib/safeCatch';
 
-import { Form as PayloadForm } from '@config/payload.types';
+import { Form as PayloadForm, Page } from '@config/payload.types';
 
 import axios from 'axios';
 import { toast } from 'sonner';
 
-export type FormBlockProps = {
-  form: PayloadForm;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'formBlock';
-};
+type FormBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'formBlock' }>;
+
+function isPayloadForm(form: FormBlockProps['form']): form is PayloadForm {
+  return !!form && typeof form !== 'number';
+}
 
 export const FormBlock: React.FC<FormBlockProps> = (props) => {
-  const {
-    form: formFromProps,
-    form: { id: formID, fields: fieldBlocks },
-  } = props;
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [recaptchaToken, setRecaptchaToken] = React.useState<string | null>(null);
 
+  const formFromProps = isPayloadForm(props.form) ? props.form : null;
+
   const form = useForm({
-    defaultValues: buildInitialFormState(formFromProps.fields),
+    defaultValues: buildInitialFormState(formFromProps?.fields ?? []),
   });
 
   const handleRecaptchaVerify = React.useCallback(async () => {
-    if (!executeRecaptcha) return;
+    if (!executeRecaptcha || !formFromProps) return;
 
-    const token = await executeRecaptcha(`form_${formID}`);
+    const token = await executeRecaptcha(`form_${formFromProps.id}`);
 
     setRecaptchaToken(token);
-  }, [executeRecaptcha, formID]);
+  }, [executeRecaptcha, formFromProps]);
 
   const onSubmit = async (values: FieldValues) => {
+    if (!formFromProps) return;
+
     if (formFromProps.recaptcha && !executeRecaptcha) {
       toast.error('reCAPTCHA is still loading. Please try again.');
       return;
@@ -61,7 +60,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
       async () => {
         const { data, error } = await safeCatch(async () => {
           return await axios.post('/api/form-submissions', {
-            form: formID,
+            form: formFromProps.id,
             submissionData: transformedData,
             recaptchaToken,
           });
@@ -105,7 +104,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex flex-wrap gap-4">
-            {fieldBlocks?.map((field, index) => {
+            {formFromProps?.fields?.map((field, index) => {
               const FieldBlockComponent = fields[field.blockType] as React.FC<
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 FieldType<typeof field.blockType> & { form: UseFormReturn<any & FieldValues> }
@@ -122,7 +121,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
               return null;
             })}
           </div>
-          {formFromProps.recaptcha && <GoogleReCaptcha onVerify={handleRecaptchaVerify} />}
+          {formFromProps?.recaptcha && <GoogleReCaptcha onVerify={handleRecaptchaVerify} />}
           <Button>{(formFromProps as PayloadForm).submitButtonLabel}</Button>
         </form>
       </Form>

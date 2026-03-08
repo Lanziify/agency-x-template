@@ -14,7 +14,7 @@ export const ContactForm: React.FC<{ activeFormCollection: Contact }> = ({ activ
       {activeFormCollection ? (
         <div className="rounded-3xl border p-6">
           {activeFormCollection.introduction && <RichText data={activeFormCollection.introduction} className="prose lg:prose-md mb-4" />}
-          <BlockRenderer blocks={activeFormCollection.form as Extract<Contact, 'form'>} />
+          {/* <BlockRenderer blocks={activeFormCollection.form as Extract<Contact, 'form'>} /> */}
         </div>
       ) : (
         <div className="prose lg:prose-md">

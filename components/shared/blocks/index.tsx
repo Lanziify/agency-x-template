@@ -2,40 +2,32 @@ export const dynamic = 'force-dynamic';
 
 import React from 'react';
 
+import { Page } from '@config/payload.types';
+
 import { FormBlock } from './form';
+import { HeroBlock } from './layout/hero';
 
-const blockMap = {
-  formBlock: FormBlock,
-} as const;
-
-type BlockMap = typeof blockMap;
-type BlockType = keyof BlockMap;
-
-type BlockProps<T extends BlockType> = React.ComponentProps<BlockMap[T]>;
-
-type BlockRendererProps<T extends BlockType> = {
-  blocks: BlockProps<T>[];
-};
-
-const BlockRenderer = <T extends BlockType>({ blocks }: BlockRendererProps<T>) => {
-  const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
-
-  if (!hasBlocks) return null;
+const BlocksRenderer: React.FC<{ blocks: Page['layout'] }> = ({ blocks }) => {
+  if (!blocks?.length) return null;
 
   return (
-    <React.Fragment>
+    <>
       {blocks.map((block, index) => {
-        const { blockType } = block;
+        const key = String(block.id ?? index);
 
-        if (blockType && blockType in blockMap) {
-          const BlockComponent = blockMap[blockType];
-          return <BlockComponent key={index} {...block} />;
+        switch (block.blockType) {
+          case 'heroBlock':
+            return <HeroBlock key={key} {...block} />;
+
+          case 'formBlock':
+            return <FormBlock key={key} {...block} />;
+
+          default:
+            return null;
         }
-
-        return null;
       })}
-    </React.Fragment>
+    </>
   );
 };
 
-export { BlockRenderer };
+export { BlocksRenderer };

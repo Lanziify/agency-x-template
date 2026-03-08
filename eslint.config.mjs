@@ -111,7 +111,7 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ['**/importMap.js', '**/*.generated.ts', '**/payload.types.ts'],
+    files: ['**/importMap.js', '**/*.generated.ts', '**/payload.types.ts', 'migrations/**'],
     rules: {
       'simpleImportSort/imports': 'off',
       'simpleImportSort/exports': 'off',
