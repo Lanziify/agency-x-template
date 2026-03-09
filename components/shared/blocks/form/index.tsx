@@ -4,8 +4,6 @@ import React from 'react';
 import { GoogleReCaptcha, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
 
-import { RichText } from '@payloadcms/richtext-lexical/react';
-
 import { buildInitialFormState } from '@blocks/form/buildInitialFormState';
 import { fields, FieldType } from '@blocks/form/fields';
 
@@ -18,6 +16,9 @@ import { Form as PayloadForm, Page } from '@config/payload.types';
 
 import axios from 'axios';
 import { toast } from 'sonner';
+import { RichText } from '@components/shared/richtext';
+import { Section } from '@components/ui/container';
+import { Card, CardContent, CardHeader } from '@components/ui/card';
 
 type FormBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'formBlock' }>;
 
@@ -79,14 +80,8 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
         }),
         error: async (error) => {
           if (axios.isAxiosError(error)) {
-            // let errorCodes: string[] = [];
-            // if (error.response?.data.errors[0].data) {
-            //   errorCodes = (error.response?.data.errors[0].data.errorCodes as Array<Record<string, string>>).map((code) => code?.message);
-            // }
-
             return {
               message: error.response?.data.errors[0].message,
-              // description: errorCodes.length > 0 ? errorCodes.toString() : '',
             };
           }
 
@@ -100,31 +95,40 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
   };
 
   return (
-    <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="flex flex-wrap gap-4">
-            {formFromProps?.fields?.map((field, index) => {
-              const FieldBlockComponent = fields[field.blockType] as React.FC<
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                FieldType<typeof field.blockType> & { form: UseFormReturn<any & FieldValues> }
-              >;
+    <Section>
+      <Card>
+        {props.introduction && (
+          <CardHeader>
+            <RichText data={props.introduction} />
+          </CardHeader>
+        )}
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="flex flex-wrap gap-4">
+                {formFromProps?.fields?.map((field, index) => {
+                  const FieldBlockComponent = fields[field.blockType] as React.FC<
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    FieldType<typeof field.blockType> & { form: UseFormReturn<any & FieldValues> }
+                  >;
 
-              if (FieldBlockComponent) {
-                return (
-                  <React.Fragment key={index}>
-                    <FieldBlockComponent {...field} form={form} />
-                  </React.Fragment>
-                );
-              }
+                  if (FieldBlockComponent) {
+                    return (
+                      <React.Fragment key={index}>
+                        <FieldBlockComponent {...field} form={form} />
+                      </React.Fragment>
+                    );
+                  }
 
-              return null;
-            })}
-          </div>
-          {formFromProps?.recaptcha && <GoogleReCaptcha onVerify={handleRecaptchaVerify} />}
-          <Button>{(formFromProps as PayloadForm).submitButtonLabel}</Button>
-        </form>
-      </Form>
-    </div>
+                  return null;
+                })}
+              </div>
+              {formFromProps?.recaptcha && <GoogleReCaptcha onVerify={handleRecaptchaVerify} />}
+              <Button>{(formFromProps as PayloadForm).submitButtonLabel}</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </Section>
   );
 };

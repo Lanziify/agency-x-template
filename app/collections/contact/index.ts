@@ -36,15 +36,6 @@ export const Contact: CollectionConfig = {
               blocks: [HeroBlock ,FormBlock],
               required: true,
             },
-            {
-              type: 'richText',
-              name: 'introduction',
-              label: 'Introduction',
-              admin: {
-                description: 'Introductory text displayed above the contact form',
-              },
-              required: false,
-            },
           ],
         },
       ],

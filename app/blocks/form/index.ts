@@ -8,6 +8,15 @@ export const FormBlock: Block = {
   },
   fields: [
     {
+      type: 'richText',
+      name: 'introduction',
+      label: 'Introduction',
+      admin: {
+        description: 'Introductory text displayed above the contact form',
+      },
+      required: false,
+    },
+    {
       name: 'form',
       type: 'relationship',
       relationTo: 'forms',
