@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
+import { RichText } from '@components/shared/richtext';
 import { Button } from '@components/ui/button';
 import { TypographyH1, TypographySmall } from '@components/ui/typography';
-import { RichText } from '@components/shared/richtext';
 
-import { CTABlockProps } from '../types';
+import { CTABlockProps } from '../../types';
 
-export const CTA = (props: CTABlockProps) => {
+export const CTABlock = (props: CTABlockProps) => {
   const { eyebrow, title, description, actions } = props;
   return (
     <div className="max-w-3xl space-y-6">

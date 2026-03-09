@@ -8,6 +8,10 @@ type Variants = NonNullable<VariantProps<typeof buttonVariants>['variant']>;
 
 export const CTABlock: Block = {
   slug: 'ctaBlock',
+  labels: {
+    singular: 'CTA',
+    plural: 'CTA',
+  },
   fields: [
     {
       name: 'eyebrow',

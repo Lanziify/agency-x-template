@@ -1,5 +1,6 @@
-import { RichText as BaseRichTextConverter } from '@payloadcms/richtext-lexical/react';
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
+import { RichText as BaseRichTextConverter } from '@payloadcms/richtext-lexical/react';
+
 import { converters } from './converters';
 
 type Props = {

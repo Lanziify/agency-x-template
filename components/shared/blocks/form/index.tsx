@@ -7,7 +7,10 @@ import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
 import { buildInitialFormState } from '@blocks/form/buildInitialFormState';
 import { fields, FieldType } from '@blocks/form/fields';
 
+import { RichText } from '@components/shared/richtext';
 import { Button } from '@components/ui/button';
+import { Card, CardContent, CardHeader } from '@components/ui/card';
+import { Section } from '@components/ui/container';
 import { Form } from '@components/ui/form';
 
 import { safeCatch } from '@lib/safeCatch';
@@ -16,9 +19,6 @@ import { Form as PayloadForm, Page } from '@config/payload.types';
 
 import axios from 'axios';
 import { toast } from 'sonner';
-import { RichText } from '@components/shared/richtext';
-import { Section } from '@components/ui/container';
-import { Card, CardContent, CardHeader } from '@components/ui/card';
 
 type FormBlockProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'formBlock' }>;
 

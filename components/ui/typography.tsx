@@ -161,17 +161,17 @@ function TypographyMuted(props: React.ComponentProps<'p'>) {
 }
 
 export {
+  TypographyBlockquote,
   TypographyH1,
   TypographyH2,
   TypographyH3,
   TypographyH4,
-  TypographyP,
-  TypographyBlockquote,
   TypographyInlineCode,
   TypographyLarge,
   TypographyLead,
   TypographyList,
   TypographyMuted,
+  TypographyP,
   TypographySmall,
   TypographyTable,
   TypographyTableTd,

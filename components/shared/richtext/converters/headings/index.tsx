@@ -1,6 +1,7 @@
-import { TypographyH1, TypographyH2, TypographyH3, TypographyH4 } from '@components/ui/typography';
 import { SerializedHeadingNode } from '@payloadcms/richtext-lexical';
 import { JSXConverters } from '@payloadcms/richtext-lexical/react';
+
+import { TypographyH1, TypographyH2, TypographyH3, TypographyH4 } from '@components/ui/typography';
 
 const headingMap = {
   h1: TypographyH1,

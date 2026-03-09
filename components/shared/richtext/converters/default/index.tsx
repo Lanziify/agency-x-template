@@ -1,6 +1,7 @@
-import { TypographyP } from '@components/ui/typography';
 import { DefaultNodeTypes } from '@payloadcms/richtext-lexical';
 import { JSXConverters } from '@payloadcms/richtext-lexical/react';
+
+import { TypographyP } from '@components/ui/typography';
 
 const extendedDefaultConverters: JSXConverters<DefaultNodeTypes> = {
   paragraph: ({ node, nodesToJSX }) => {

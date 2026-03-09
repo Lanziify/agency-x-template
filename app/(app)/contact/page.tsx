@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import React from 'react';
 
-import { BlocksRenderer } from '@components/shared/blocks';
+import { renderBlocks } from '@components/shared/blocks/renderer';
 import RecaptchaProvider from '@components/shared/providers/recaptcha-provider';
 import { SonnerProvider } from '@components/ui/sonner-provider';
 
@@ -19,11 +19,11 @@ export default async function ContactPage() {
     depth: 1,
   });
 
+  const page = result.docs[0];
+
   return (
     <React.Fragment>
-      <RecaptchaProvider>
-        <BlocksRenderer blocks={result.docs[0].layout} />
-      </RecaptchaProvider>
+      {page && <RecaptchaProvider>{renderBlocks(page.layout)}</RecaptchaProvider>}
       <SonnerProvider position="top-center" />
     </React.Fragment>
   );

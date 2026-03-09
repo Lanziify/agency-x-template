@@ -1,7 +1,8 @@
 import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical';
 import { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react';
-import { headingConverters } from './headings';
+
 import { extendedDefaultConverters } from './default';
+import { headingConverters } from './headings';
 
 type NodeType = DefaultNodeTypes | SerializedBlockNode;
 
