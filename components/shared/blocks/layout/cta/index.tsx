@@ -10,11 +10,11 @@ export const CTABlock = (props: CTABlockProps) => {
   const { eyebrow, title, description, actions } = props;
   return (
     <div className="max-w-3xl space-y-6">
-      {eyebrow && <TypographySmall className="text-white">{eyebrow}</TypographySmall>}
+      {eyebrow && <TypographySmall className="dark:text-white">{eyebrow}</TypographySmall>}
 
-      <TypographyH1 className="text-white">{title}</TypographyH1>
+      <TypographyH1 className="dark:text-white">{title}</TypographyH1>
 
-      {description && <RichText data={description} className="text-white" />}
+      {description && <RichText data={description} className="dark:text-white" />}
 
       {Boolean(actions && actions.length > 0) && (
         <div className="flex flex-wrap gap-2">

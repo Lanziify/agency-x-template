@@ -1,15 +1,29 @@
-import { Section } from '@components/ui/container';
-
+import { Container } from '@components/ui/container';
 import { renderBlocks } from '../../renderer';
 import { HeroBlockProps } from '../../types';
+import { Media } from '@config/payload.types';
+import { WithFallbackImage } from '@components/ui/image';
+import { cn } from '@lib/utils';
 
-export const HeroBlock: React.FC<HeroBlockProps> = (props) => {
-  const { components } = props;
+function isMedia(media: number | Media | null | undefined): media is Media {
+  return Boolean(media && typeof media !== 'number');
+}
+
+export const HeroBlock: React.FC<HeroBlockProps> = ({ media, components }) => {
+  const initialSrc = isMedia(media) ? media.url : '';
+  const initialAlt = isMedia(media) ? media.alt : '';
 
   return (
-    <div className="grid">
-      <div className="flex min-h-122.25 items-center bg-black/40">
-        <Section className="[grid-area:1/1]">{components && renderBlocks(components)}</Section>
+    <div className="relative flex min-h-122.25 items-stretch">
+      <div
+        className={cn('relative z-10 flex flex-1 items-center bg-white/20 backdrop-blur-xs dark:bg-white/20', {
+          'border-b dark:border-b-white/20': !isMedia(media),
+        })}>
+        <Container className="relative z-10 dark:bg-transparent">{components ? renderBlocks(components) : null}</Container>
+      </div>
+
+      <div className="absolute inset-0 z-0 flex items-center justify-center">
+        <WithFallbackImage src={initialSrc} alt={initialAlt} className="w-full object-cover" />
       </div>
     </div>
   );
