@@ -1,15 +1,18 @@
 import { Container } from '@components/ui/container';
-import { renderBlocks } from '../../renderer';
-import { HeroBlockProps } from '../../types';
-import { Media } from '@config/payload.types';
 import { WithFallbackImage } from '@components/ui/image';
+
 import { cn } from '@lib/utils';
+
+import { Media } from '@config/payload.types';
+
+import { renderBlocks } from '../../renderer';
+import { PageBlock } from '../../types';
 
 function isMedia(media: number | Media | null | undefined): media is Media {
   return Boolean(media && typeof media !== 'number');
 }
 
-export const HeroBlock: React.FC<HeroBlockProps> = ({ media, components }) => {
+export const HeroBlock: React.FC<PageBlock['heroBlock']> = ({ media, components }) => {
   const initialSrc = isMedia(media) ? media.url : '';
   const initialAlt = isMedia(media) ? media.alt : '';
 

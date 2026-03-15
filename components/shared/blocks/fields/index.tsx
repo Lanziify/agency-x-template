@@ -1,21 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { FieldValues, UseFormReturn } from 'react-hook-form';
+'use client';
 
-import { FieldType } from '@blocks/form/fields';
+import { useFormContext } from 'react-hook-form';
 
 import { Field, FieldError, FieldLabel } from '@components/ui/field';
 import { Input } from '@components/ui/input';
 import { Textarea } from '@components/ui/textarea';
 
+import { PageBlock } from '../types';
+
 const Width: React.FC<{ children: React.ReactNode; width?: number | null }> = ({ children, width }) => {
   return <Field style={{ flex: 1, flexBasis: width ? `calc(${width}% - var(--spacing) * 4)` : '100%' }}>{children}</Field>;
 };
 
-const Text: React.FC<
-  FieldType<'text'> & {
-    form: UseFormReturn<any & FieldValues>;
-  }
-> = ({ width, name, label, required, errorMessage, form }) => {
+const Text: React.FC<PageBlock['text']> = ({ width, name, label, required, errorMessage }) => {
+  const form = useFormContext();
   const error = form.formState.errors[name];
 
   return (
@@ -29,11 +27,8 @@ const Text: React.FC<
   );
 };
 
-const Email: React.FC<
-  FieldType<'email'> & {
-    form: UseFormReturn<any & FieldValues>;
-  }
-> = ({ width, name, label, required, errorMessage, form }) => {
+const Email: React.FC<PageBlock['email']> = ({ width, name, label, required, errorMessage }) => {
+  const form = useFormContext();
   const error = form.formState.errors[name];
 
   return (
@@ -47,11 +42,8 @@ const Email: React.FC<
   );
 };
 
-const TextArea: React.FC<
-  FieldType<'textarea'> & {
-    form: UseFormReturn<any & FieldValues>;
-  }
-> = ({ width, name, label, required, errorMessage, form }) => {
+const TextArea: React.FC<PageBlock['textarea']> = ({ width, name, label, required, errorMessage }) => {
+  const form = useFormContext();
   const error = form.formState.errors[name];
 
   return (

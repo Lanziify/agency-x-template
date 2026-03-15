@@ -1,21 +1,25 @@
 import { Page } from '@config/payload.types';
 
-type GetUniqueBlock<T> = T extends readonly (infer U)[]
-  ? GetUniqueBlock<U>
+type GetUniqueBlocks<T> = T extends readonly (infer U)[]
+  ? GetUniqueBlocks<U>
   : T extends object
-    ?
-        | (T extends { blockType: string } ? T : never)
-        | {
-            [K in keyof T]: GetUniqueBlock<T[K]>;
-          }[keyof T]
+    ? (T extends { blockType: string } ? T : never) | { [K in keyof T]: GetUniqueBlocks<T[K]> }[keyof T]
     : never;
 
-export type Block = GetUniqueBlock<Page['layout']>;
+export type PageUniqueBlocks = GetUniqueBlocks<Page['layout']>;
 
-export type HeroBlockProps = Extract<Block, { blockType: 'heroBlock' }>;
-export type CTABlockProps = Extract<Block, { blockType: 'ctaBlock' }>;
+export type ByBlockType<T> = {
+  [B in Extract<T, { blockType: PropertyKey }> as B['blockType']]: B;
+};
 
-// Fields
-export type TextFieldBlockProps = Extract<Block, { blockType: 'text' }>;
-export type EmailFieldBlockProps = Extract<Block, { blockType: 'email' }>;
-export type TextAreaFieldBlockProps = Extract<Block, { blockType: 'textarea' }>;
+export type PageBlock = ByBlockType<PageUniqueBlocks>;
+
+export type AnyBlock = PageBlock[keyof PageBlock];
+
+export type RenderableBlock = {
+  [K in keyof PageBlock]: PageBlock[K];
+};
+
+export type PageBlockComponentMap = {
+  [K in keyof RenderableBlock]?: React.FC<RenderableBlock[K]>;
+};

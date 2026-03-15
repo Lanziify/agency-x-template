@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Poppins, Lato, Geist_Mono } from 'next/font/google';
+import { Geist_Mono, Lato, Poppins } from 'next/font/google';
 
 import './globals.css';
 

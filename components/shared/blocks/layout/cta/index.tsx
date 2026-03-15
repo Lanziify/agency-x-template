@@ -4,9 +4,9 @@ import { RichText } from '@components/shared/richtext';
 import { Button } from '@components/ui/button';
 import { TypographyH1, TypographySmall } from '@components/ui/typography';
 
-import { CTABlockProps } from '../../types';
+import { PageBlock } from '../../types';
 
-export const CTABlock = (props: CTABlockProps) => {
+export const CTABlock = (props: PageBlock['ctaBlock']) => {
   const { eyebrow, title, description, actions } = props;
   return (
     <div className="max-w-3xl space-y-6">
