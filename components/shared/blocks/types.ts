@@ -1,4 +1,4 @@
-import { Page } from '@config/payload.types';
+import { News, Page } from '@config/payload.types';
 
 type GetUniqueBlocks<T> = T extends readonly (infer U)[]
   ? GetUniqueBlocks<U>
@@ -22,4 +22,19 @@ export type RenderableBlock = {
 
 export type PageBlockComponentMap = {
   [K in keyof RenderableBlock]?: React.FC<RenderableBlock[K]>;
+};
+
+export type CollectionMap = {
+  news: News;
+};
+
+export type PageParams = {
+  params: {
+    slug?: string[];
+  };
+  searchParams: {
+    page?: string;
+    limit?: string;
+    category?: string;
+  };
 };

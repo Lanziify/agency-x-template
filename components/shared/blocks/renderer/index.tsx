@@ -1,37 +1,42 @@
-import type { ReactNode } from 'react';
 import React from 'react';
 
 import { Email, Text, TextArea } from '../fields';
 import { FormBlock } from '../form';
+import ContentGridBlock from '../layout/content-grid';
 import { CTABlock } from '../layout/cta';
 import { HeroBlock } from '../layout/hero';
-import { AnyBlock } from '../types';
+import { AnyBlock, PageParams } from '../types';
 
-function renderBlocks(blocks: AnyBlock | AnyBlock[]): ReactNode {
+async function renderBlocks(blocks: AnyBlock | AnyBlock[], pageProps: PageParams): Promise<React.ReactNode> {
   if (!blocks) return null;
 
   if (Array.isArray(blocks)) {
-    return blocks.map((block, index) => <React.Fragment key={block?.id ?? index}>{renderBlocks(block)}</React.Fragment>);
+    return await Promise.all(
+      blocks.map(async (block, index) => <React.Fragment key={block?.id ?? index}>{await renderBlocks(block, pageProps)}</React.Fragment>)
+    );
   }
 
   switch (blocks.blockType) {
     case 'heroBlock':
-      return <HeroBlock {...blocks} />;
+      return <HeroBlock key={blocks.id} {...blocks} />;
+
+    case 'contentGridBlock':
+      return <ContentGridBlock key={blocks.id} {...blocks} pageProps={pageProps} />;
 
     case 'ctaBlock':
-      return <CTABlock {...blocks} />;
+      return <CTABlock key={blocks.id} {...blocks} />;
 
     case 'formBlock':
-      return <FormBlock {...blocks} />;
+      return <FormBlock key={blocks.id} {...blocks} />;
 
     case 'text':
-      return <Text {...blocks} />;
+      return <Text key={blocks.id} {...blocks} />;
 
     case 'email':
-      return <Email {...blocks} />;
+      return <Email key={blocks.id} {...blocks} />;
 
     case 'textarea':
-      return <TextArea {...blocks} />;
+      return <TextArea key={blocks.id} {...blocks} />;
 
     default:
       return null;

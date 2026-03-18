@@ -16,7 +16,7 @@ export const News: CollectionConfig<'news'> = {
     drafts: true,
   },
   labels: {
-    singular: 'News',
+    singular: 'News Article',
     plural: 'News Articles',
   },
   defaultPopulate: {

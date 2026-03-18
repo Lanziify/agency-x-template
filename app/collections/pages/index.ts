@@ -1,35 +1,28 @@
-import type { CollectionConfig } from 'payload';
+import { type CollectionConfig } from 'payload';
 import { MetaDescriptionField, MetaImageField, MetaTitleField, OverviewField, PreviewField } from '@payloadcms/plugin-seo/fields';
 
+import { slugField } from '@collections/fields';
+
 import { FormBlock } from '@blocks/form';
+import { ContentGridBlock } from '@blocks/layout/content-grid';
 import { HeroBlock } from '@blocks/layout/hero';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
-    useAsTitle: 'title',
+    defaultColumns: ['name', 'slug', 'updatedAt'],
+    useAsTitle: 'name',
   },
   versions: {
     drafts: true,
   },
   fields: [
     {
-      name: 'title',
+      name: 'name',
       type: 'text',
       required: true,
     },
-    {
-      name: 'slug',
-      label: 'Slug',
-      type: 'text',
-      admin: {
-        readOnly: true,
-        components: {
-          Field: '@components/shared/CustomSlugFieldClient',
-        },
-      },
-    },
+    slugField({ useAsSlug: 'name' }),
     {
       type: 'tabs',
       tabs: [
@@ -39,34 +32,38 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [HeroBlock, FormBlock],
+              blocks: [HeroBlock, ContentGridBlock, FormBlock],
               required: true,
             },
           ],
         },
-        {
-          name: 'meta',
-          label: 'SEO',
-          fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: 'media',
-            }),
-            MetaDescriptionField({}),
-            PreviewField({
-              hasGenerateFn: true,
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
-          ],
-        },
+      ],
+    },
+    {
+      name: 'meta',
+      type: 'group',
+      label: 'SEO',
+      admin: {
+        position: 'sidebar',
+      },
+      fields: [
+        OverviewField({
+          titlePath: 'meta.name',
+          descriptionPath: 'meta.description',
+          imagePath: 'meta.image',
+        }),
+        MetaTitleField({
+          hasGenerateFn: true,
+        }),
+        MetaImageField({
+          relationTo: 'media',
+        }),
+        MetaDescriptionField({}),
+        PreviewField({
+          hasGenerateFn: true,
+          titlePath: 'meta.title',
+          descriptionPath: 'meta.description',
+        }),
       ],
     },
   ],
