@@ -1,10 +1,9 @@
 'use client';
-
 import React from 'react';
 import { GoogleReCaptcha, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
-import { buildInitialFormState } from '@blocks/form/buildInitialFormState';
+import { buildInitialFormState } from '@blocks/form/util/form';
 
 import { RichText } from '@components/shared/richtext';
 import { Button } from '@components/ui/button';
@@ -16,19 +15,17 @@ import { safeCatch } from '@lib/safeCatch';
 
 import { Form as PayloadForm } from '@config/payload.types';
 
+import { IntroBlockComponent } from '../page/elements/intro';
+import { PageBlock } from '../page/types';
+import { blockRegistry } from '../registry';
 import { renderBlocks } from '../renderer';
-import { PageBlock } from '../types';
+import { Email, Text, TextArea } from './fields';
+import { isPayloadForm } from './util';
 
 import axios from 'axios';
 import { toast } from 'sonner';
 
-type FormBlockProps = PageBlock['formBlock'];
-
-function isPayloadForm(form: FormBlockProps['form']): form is PayloadForm {
-  return !!form && typeof form !== 'number';
-}
-
-export const FormBlock: React.FC<FormBlockProps> = (props) => {
+export const FormBlock: React.FC<PageBlock['formBlock']> = (props) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [recaptchaToken, setRecaptchaToken] = React.useState<string | null>(null);
 
@@ -101,11 +98,9 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
       <Section>
         <Container>
           <Card className="dark:bg-accent-foreground dark:border-accent-foreground">
-            {props.introduction && (
-              <CardHeader>
-                <RichText data={props.introduction} />
-              </CardHeader>
-            )}
+            <CardHeader>
+              <IntroBlockComponent {...props} />
+            </CardHeader>
             <CardContent>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -121,3 +116,7 @@ export const FormBlock: React.FC<FormBlockProps> = (props) => {
     </FormProvider>
   );
 };
+
+blockRegistry.register('email', Email);
+blockRegistry.register('text', Text);
+blockRegistry.register('textarea', TextArea);

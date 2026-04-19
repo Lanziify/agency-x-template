@@ -1,7 +1,7 @@
 import { APIError, Field } from 'payload';
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
 
-import { Email, Text, TextArea } from '@blocks/fields';
+import { formFieldsConfig } from '@blocks/form/overrides/fields-config';
 
 import { FormSubmission } from '@config/payload.types';
 
@@ -40,21 +40,7 @@ const isRecaptchaResponseSuccess = (response: ReCaptchaVerifyResponse): response
 };
 
 export const formBuilder = formBuilderPlugin({
-  fields: {
-    text: Text,
-    email: Email,
-    textarea: TextArea,
-    checkbox: false,
-    date: false,
-    number: false,
-    select: false,
-    radio: false,
-    file: false,
-    country: false,
-    message: false,
-    payment: false,
-    state: false,
-  },
+  fields: formFieldsConfig,
   formOverrides: {
     fields: ({ defaultFields }) => {
       const recaptcha: Field = {

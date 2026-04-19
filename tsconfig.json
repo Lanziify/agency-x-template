@@ -24,11 +24,14 @@
       "@payload-config": ["./config/payload.config.ts"],
       "@app/*": ["./app/(app)/*"],
       "@collections/*": ["./app/collections/*"],
+      "@data/*": ["./app/data/*"],
+      "@globals/*": ["./app/globals/*"],
       "@blocks/*": ["./app/blocks/*"],
       "@components/*": ["./components/*"],
       "@features/*": ["./features/*"],
       "@lib/*": ["./lib/*"],
-      "@config/*": ["./config/*"]
+      "@config/*": ["./config/*"],
+      "@styles/*": ["./styles/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts", "globals.d.ts"],

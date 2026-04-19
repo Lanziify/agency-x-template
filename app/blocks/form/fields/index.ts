@@ -1,16 +1,49 @@
-import { Email, Text, TextArea } from '@components/shared/blocks/fields';
+import { createFieldBlock } from '../util/field';
 
-import { Form } from '@config/payload.types';
-
-export type FormField = NonNullable<Form['fields']>[number];
-export type FieldBlockType = FormField['blockType'];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type FieldWithDefault = Extract<FormField, { defaultValue?: any }>;
-export type FieldBlockValueType = FieldWithDefault['defaultValue'];
-export type FieldType<T extends FormField['blockType']> = Extract<FormField, { blockType: T }>;
-
-export const fields = {
-  text: Text,
-  email: Email,
-  textarea: TextArea,
-} as const;
+export const Checkbox = createFieldBlock('checkbox', [
+  {
+    name: 'defaultValue',
+    type: 'checkbox',
+  },
+]);
+export const Text = createFieldBlock('text', [
+  {
+    name: 'defaultValue',
+    type: 'text',
+    label: 'Default Value',
+    localized: true,
+  },
+]);
+export const Select = createFieldBlock('select', [
+  {
+    name: 'options',
+    type: 'array',
+    label: 'Options',
+    fields: [
+      {
+        name: 'label',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'value',
+        type: 'text',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: 'defaultValue',
+    type: 'text',
+    label: 'Default Value',
+  },
+]);
+export const Email = createFieldBlock('email');
+export const TextArea = createFieldBlock('textarea', [
+  {
+    name: 'defaultValue',
+    type: 'textarea',
+    label: 'Default Value',
+    localized: true,
+  },
+]);

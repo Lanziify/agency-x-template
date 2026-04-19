@@ -1,21 +1,10 @@
-import type { Block } from 'payload';
+import { contentAlignment } from '@blocks/page/config/presentation';
+import { IntroFields } from '@blocks/page/elements/intro';
+import { createBlockWithConfig } from '@blocks/page/util';
 
-export const FormBlock: Block = {
-  slug: 'formBlock',
-  labels: {
-    singular: 'Form',
-    plural: 'Forms',
-  },
-  fields: [
-    {
-      type: 'richText',
-      name: 'introduction',
-      label: 'Introduction',
-      admin: {
-        description: 'Introductory text displayed above the contact form',
-      },
-      required: false,
-    },
+export const FormBlock = createBlockWithConfig('formBlock', {
+  content: [
+    ...IntroFields,
     {
       name: 'form',
       type: 'relationship',
@@ -23,4 +12,5 @@ export const FormBlock: Block = {
       required: true,
     },
   ],
-};
+  presentation: [contentAlignment],
+});

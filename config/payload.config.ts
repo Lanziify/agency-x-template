@@ -5,6 +5,7 @@ import email from '@lib/email';
 
 import { collections } from './collections';
 import { editor } from './editor';
+import { globals } from './globals';
 import { livePreview } from './livePreview';
 import { plugins } from './plugins';
 
@@ -18,6 +19,7 @@ const __dirname = path.dirname(__filename);
 export default buildConfig({
   editor,
   collections,
+  globals,
   email,
   plugins,
   secret: process.env.PAYLOAD_SECRET || '',

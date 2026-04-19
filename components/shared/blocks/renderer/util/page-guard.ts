@@ -1,8 +1,8 @@
 import { Page } from '@config/payload.types';
 
-import { AnyBlock } from '../../types';
+import { AnyPageBlock } from '../../page/types';
 
-export function findFormBlock(blocks: AnyBlock[]): boolean {
+export function findFormBlock(blocks: AnyPageBlock[]): boolean {
   for (const block of blocks) {
     if (block.blockType === 'formBlock') return true;
 
@@ -13,7 +13,7 @@ export function findFormBlock(blocks: AnyBlock[]): boolean {
         if (Array.isArray(value)) {
           // Only recurse if it looks like blocks
           if (value.length > 0 && typeof value[0] === 'object') {
-            if (findFormBlock(value as AnyBlock[])) return true;
+            if (findFormBlock(value as AnyPageBlock[])) return true;
           }
         }
       }

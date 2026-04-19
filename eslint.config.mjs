@@ -40,7 +40,7 @@ const eslintConfig = defineConfig([
         },
         {
           type: 'shared',
-          pattern: ['app/collections/**', 'app/blocks/**/*', 'components/**/*', 'lib/**'],
+          pattern: ['app/collections/**', 'app/data/**', 'app/globals/**', 'app/blocks/**/*', 'components/**/*', 'lib/**', 'styles/**'],
         },
         {
           type: 'app',
@@ -98,6 +98,7 @@ const eslintConfig = defineConfig([
             ['^@app'],
             ['^@collections'],
             ['^@blocks'],
+            ['^@queries'],
             ['^@components'],
             ['^@features'],
             ['^@lib'],

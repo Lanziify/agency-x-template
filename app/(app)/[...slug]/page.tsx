@@ -1,15 +1,16 @@
 export const dynamic = 'force-dynamic';
-
 import { notFound } from 'next/navigation';
 
+import { PageParams } from '@components/shared/blocks/page/types';
 import { renderBlocks } from '@components/shared/blocks/renderer';
 import { hasFormBlock } from '@components/shared/blocks/renderer/util/page-guard';
-import { PageParams } from '@components/shared/blocks/types';
 import RecaptchaProvider from '@components/shared/providers/recaptcha-provider';
 import { Wrapper } from '@components/ui/container';
 import { SonnerProvider } from '@components/ui/sonner-provider';
 
 import { payload } from '@lib/payload';
+
+import '@components/shared/blocks';
 
 async function getPage(path: string) {
   const result = await payload.find({
@@ -36,11 +37,9 @@ export default async function Page(props: PageParams) {
 
   if (!page) return notFound();
 
-  const content = await renderBlocks(page.layout, props);
-
   return (
     <Wrapper>
-      <RecaptchaProvider hasFormBlock={hasFormBlock(page)}>{content}</RecaptchaProvider>
+      <RecaptchaProvider hasFormBlock={hasFormBlock(page)}>{renderBlocks(page.layout)}</RecaptchaProvider>
       <SonnerProvider position="top-center" />
     </Wrapper>
   );

@@ -4,7 +4,7 @@ function Wrapper(props: React.ComponentProps<'div'>) {
   const { className, children, ...rest } = props;
 
   return (
-    <div className={cn('w-full min-h-screen dark:bg-black', className)} {...rest}>
+    <div className={cn('min-h-[calc(100vh-150px)] w-full dark:bg-black', className)} {...rest}>
       {children}
     </div>
   );
@@ -24,10 +24,10 @@ function Section(props: React.ComponentProps<'section'>) {
   const { className, children, ...rest } = props;
 
   return (
-    <section className={cn('py-10 lg:py-15', className)} {...rest}>
+    <section className={cn('p y-10 lg:py-15', className)} {...rest}>
       {children}
     </section>
   );
 }
 
-export { Wrapper, Container, Section };
+export { Container, Section, Wrapper };

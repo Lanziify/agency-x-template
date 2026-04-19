@@ -41,6 +41,7 @@ export default function Home() {
             rel="noopener noreferrer">
             Documentation
           </a>
+          {/* <IconPicker/> */}
         </div>
       </main>
     </div>

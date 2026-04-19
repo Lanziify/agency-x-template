@@ -1,0 +1,44 @@
+@import url('./theme.css');
+
+@layer theme, base, components, utilities;
+
+@layer theme {
+  @import 'tailwindcss/theme.css';
+}
+
+@layer base {
+  .twp {
+    @import 'tailwindcss/preflight.css';
+  }
+
+  .twp * {
+    box-sizing: border-box;
+  }
+
+  .twp.no-twp {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+      all: revert-layer;
+    }
+  }
+}
+
+@layer components;
+
+@layer utilities {
+  @import 'tailwindcss/utilities.css';
+}
+
+@layer utilities {
+  .table {
+    display: block;
+    width: 100%;
+  }
+  button:not([disabled]),
+  [role='button']:not([disabled]) {
+    cursor: pointer;
+  }
+}

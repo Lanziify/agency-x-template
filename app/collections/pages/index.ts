@@ -4,17 +4,31 @@ import { MetaDescriptionField, MetaImageField, MetaTitleField, OverviewField, Pr
 import { slugField } from '@collections/fields';
 
 import { FormBlock } from '@blocks/form';
-import { ContentGridBlock } from '@blocks/layout/content-grid';
-import { HeroBlock } from '@blocks/layout/hero';
+import { ContainerBlock } from '@blocks/page/elements/container';
+import { FAQBlock } from '@blocks/page/faq-block';
+import { FeatureBlock } from '@blocks/page/feature-block';
+import { HeroBlock } from '@blocks/page/hero-block';
+import { PricingBlock } from '@blocks/page/pricing-block';
+import { SectionBlock } from '@blocks/page/section-block';
+import { TeamBlock } from '@blocks/page/team-block';
+import { TestimonialsBlock } from '@blocks/page/testimonials-block';
+
+import { getClientSideURL } from '@lib/getURL';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
     defaultColumns: ['name', 'slug', 'updatedAt'],
     useAsTitle: 'name',
+    livePreview: {
+      url: ({ data }) => getClientSideURL(data.slug),
+    },
   },
   versions: {
-    drafts: true,
+    drafts: {
+      autosave: true,
+      schedulePublish: true,
+    },
   },
   fields: [
     {
@@ -32,38 +46,50 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [HeroBlock, ContentGridBlock, FormBlock],
+              blocks: [
+                HeroBlock,
+                FeatureBlock,
+                TestimonialsBlock,
+                TeamBlock,
+                FAQBlock,
+                PricingBlock,
+                FormBlock,
+                SectionBlock,
+                ContainerBlock,
+              ],
               required: true,
             },
           ],
         },
-      ],
-    },
-    {
-      name: 'meta',
-      type: 'group',
-      label: 'SEO',
-      admin: {
-        position: 'sidebar',
-      },
-      fields: [
-        OverviewField({
-          titlePath: 'meta.name',
-          descriptionPath: 'meta.description',
-          imagePath: 'meta.image',
-        }),
-        MetaTitleField({
-          hasGenerateFn: true,
-        }),
-        MetaImageField({
-          relationTo: 'media',
-        }),
-        MetaDescriptionField({}),
-        PreviewField({
-          hasGenerateFn: true,
-          titlePath: 'meta.title',
-          descriptionPath: 'meta.description',
-        }),
+        {
+          label: 'SEO',
+          fields: [
+            {
+              name: 'meta',
+              type: 'group',
+              label: 'SEO',
+              fields: [
+                OverviewField({
+                  titlePath: 'meta.name',
+                  descriptionPath: 'meta.description',
+                  imagePath: 'meta.image',
+                }),
+                MetaTitleField({
+                  hasGenerateFn: true,
+                }),
+                MetaImageField({
+                  relationTo: 'media',
+                }),
+                MetaDescriptionField({}),
+                PreviewField({
+                  hasGenerateFn: true,
+                  titlePath: 'meta.title',
+                  descriptionPath: 'meta.description',
+                }),
+              ],
+            },
+          ],
+        },
       ],
     },
   ],
