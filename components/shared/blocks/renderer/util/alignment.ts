@@ -4,7 +4,7 @@ export const alignmentClasses = {
   end: 'text-end',
 };
 
-export function getContentTextAlignment(
+export function getItemAlignment(
   alignment: keyof typeof alignmentClasses,
   overrides?: Partial<Record<keyof typeof alignmentClasses, string>>
 ) {

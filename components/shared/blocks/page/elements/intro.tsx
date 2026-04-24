@@ -16,10 +16,10 @@ const RenderHeading = ({ heading, typography }: { heading: string; typography: P
 };
 
 export const IntroBlockComponent: React.FC<IntroBlockType> = (props) => {
-  const { tagline, heading, description, typography, width, contentAlignment } = props;
+  const { tagline, heading, description, typography, width, itemAlignment } = props;
 
   return (
-    <div className={cn('flex flex-col gap-4')} style={{ alignItems: contentAlignment!, ...(width && resolveWidth(width)) }}>
+    <div className={cn('flex flex-col gap-4')} style={{ alignItems: itemAlignment!, ...(width && resolveWidth(width)) }}>
       {tagline && <TypographySmall>{tagline}</TypographySmall>}
       {heading && <RenderHeading heading={heading} typography={typography ?? 'TypographyH2'} />}
 

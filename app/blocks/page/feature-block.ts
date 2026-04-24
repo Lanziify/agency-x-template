@@ -1,4 +1,4 @@
-import { contentAlignment } from './config/presentation';
+import { ItemAlignment } from './config/alignment';
 import { IntroFields } from './elements/intro';
 import { createBlockWithConfig } from './util';
 
@@ -28,5 +28,5 @@ export const FeatureBlock = createBlockWithConfig('featureBlock', {
       ],
     },
   ],
-  presentation: [contentAlignment],
+  presentation: [ItemAlignment],
 });

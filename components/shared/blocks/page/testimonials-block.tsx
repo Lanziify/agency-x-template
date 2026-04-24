@@ -32,7 +32,7 @@ export const TestimonialsBlock: React.FC<PageBlock['testimonialsBlock']> = ({
   heading,
   description,
   testimonials,
-  itemLayout: layout = 'grid',
+  viewType: layout = 'grid',
 }) => {
   return (
     <Section>

@@ -1,4 +1,4 @@
-import { itemLayout } from './config/presentation';
+import { ViewType } from './config/layout';
 import { IntroFields } from './elements/intro';
 import { createBlockWithConfig } from './util';
 
@@ -47,5 +47,5 @@ export const TestimonialsBlock = createBlockWithConfig('testimonialsBlock', {
       ],
     },
   ],
-  presentation: [itemLayout],
+  presentation: [ViewType],
 });

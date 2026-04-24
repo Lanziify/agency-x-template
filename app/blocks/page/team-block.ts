@@ -1,4 +1,4 @@
-import { contentAlignment, itemLayout } from './config/presentation';
+import { ViewType } from './config/layout';
 import { IntroFields } from './elements/intro';
 import { createBlockWithConfig } from './util';
 
@@ -50,5 +50,5 @@ export const TeamBlock = createBlockWithConfig('teamBlock', {
       minRows: 1,
     },
   ],
-  presentation: [contentAlignment, itemLayout],
+  presentation: [ViewType],
 });

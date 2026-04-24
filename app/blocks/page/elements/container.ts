@@ -1,6 +1,9 @@
 import { Block, Field, Validate } from 'payload';
 
-import { containerWidth, contentAlignment, rootBlock } from '../config/presentation';
+import { ItemAlignment } from '../config/alignment';
+import { Background } from '../config/background';
+import { RootBlock } from '../config/presentation';
+import { Width } from '../config/width';
 import { createBlockWithConfig } from '../util';
 import { AccordionBlock } from './accordion';
 import { ButtonBlock } from './button';
@@ -68,7 +71,7 @@ function createNestedContainerBlock(maxDepth: number = 3): Block {
         validate: childrenWidthValidate,
       },
     ],
-    presentation: [rootBlock, containerWidth, contentAlignment],
+    presentation: [RootBlock, Width, ItemAlignment, Background],
   });
 }
 

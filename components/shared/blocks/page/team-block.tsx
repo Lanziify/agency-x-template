@@ -1,25 +1,20 @@
 import { Container, Section } from '@components/ui/container';
 import { WithFallbackImage } from '@components/ui/image';
-import { TypographyH2, TypographyH3, TypographyP, TypographySmall } from '@components/ui/typography';
+import { TypographyH3, TypographyP, TypographySmall } from '@components/ui/typography';
 
 import { isMedia } from '@lib/media';
-import { cn } from '@lib/utils';
 
-import { getContentTextAlignment } from '../renderer/util/alignment';
 import { socialIcons } from '../renderer/util/icons';
+import { IntroBlockComponent } from './elements/intro';
 import { PageBlock } from './types';
 
-export const TeamBlock: React.FC<PageBlock['teamBlock']> = ({ tagline, heading, description, members, contentAlignment: alignment }) => {
-  const contentAlignment = getContentTextAlignment(alignment ?? 'start');
+export const TeamBlock: React.FC<PageBlock['teamBlock']> = (props) => {
+  const { tagline, heading, description, members } = props;
 
   return (
     <Section>
       <Container>
-        <div className={cn('space-y-6', contentAlignment)}>
-          {tagline && <TypographySmall>{tagline}</TypographySmall>}
-          {heading && <TypographyH2 className="dark:text-white">{heading}</TypographyH2>}
-          {description && <TypographyP>{description}</TypographyP>}
-        </div>
+        <IntroBlockComponent {...props} />
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {members?.map((member) => {

@@ -1,4 +1,6 @@
-import { containerWidth, rootBlock } from './config/presentation';
+import { Background } from './config/background';
+import { RootBlock } from './config/presentation';
+import { Width } from './config/width';
 import { ButtonBlock } from './elements/button';
 import { ContainerBlock } from './elements/container';
 import { IntroBlock } from './elements/intro';
@@ -14,5 +16,5 @@ export const SectionBlock = createBlockWithConfig('sectionBlock', {
       blocks: [ContainerBlock, IntroBlock, MediaBlock, ButtonBlock, RichTextBlock],
     },
   ],
-  presentation: [rootBlock, containerWidth],
+  presentation: [RootBlock, Width, Background],
 });

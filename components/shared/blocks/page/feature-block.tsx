@@ -5,14 +5,14 @@ import { TypographyH3, TypographyP } from '@components/ui/typography';
 import { isMedia } from '@lib/media';
 import { cn } from '@lib/utils';
 
-import { getContentTextAlignment } from '../renderer/util/alignment';
+import { getItemAlignment } from '../renderer/util/alignment';
 import { IntroBlockComponent } from './elements/intro';
 import { PageBlock } from './types';
 
 export const FeatureBlock: React.FC<PageBlock['featureBlock']> = (props) => {
-  const { features, contentAlignment } = props;
+  const { features, itemAlignment } = props;
 
-  const alignment = getContentTextAlignment(contentAlignment ?? 'start', {
+  const alignment = getItemAlignment(itemAlignment ?? 'start', {
     start: 'items-start text-start',
     center: 'items-center text-center',
     end: 'items-end text-end',

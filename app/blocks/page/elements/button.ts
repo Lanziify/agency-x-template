@@ -1,6 +1,6 @@
 import { buttonVariants } from '@components/ui/button';
 
-import { containerWidth } from '../config/presentation';
+import { Width } from '../config/width';
 import { createBlockWithConfig } from '../util';
 
 import type { VariantProps } from 'class-variance-authority';
@@ -41,11 +41,22 @@ export const ButtonBlock = createBlockWithConfig('buttonBlock', {
           admin: {
             components: {
               Field: {
-                path: '@components/shared/icon-picker-field',
+                path: '@components/custom-fields/drawer-test',
               },
             },
           },
         },
+        // {
+        //   name: 'icon',
+        //   type: 'text',
+        //   admin: {
+        //     components: {
+        //       Field: {
+        //         path: '@components/shared/icon-picker-field',
+        //       },
+        //     },
+        //   },
+        // },
         {
           name: 'iconPosition',
           type: 'select',
@@ -67,5 +78,5 @@ export const ButtonBlock = createBlockWithConfig('buttonBlock', {
       ],
     },
   ],
-  presentation: [containerWidth],
+  presentation: [Width],
 });

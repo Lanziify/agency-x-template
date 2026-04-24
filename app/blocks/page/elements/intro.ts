@@ -1,6 +1,7 @@
 import { Field } from 'payload';
 
-import { containerWidth, contentAlignment } from '../config/presentation';
+import { ItemAlignment } from '../config/alignment';
+import { Width } from '../config/width';
 import { createBlockWithConfig } from '../util';
 import { HeadingField } from './heading';
 
@@ -18,5 +19,5 @@ export const IntroFields: Field[] = [
 
 export const IntroBlock = createBlockWithConfig('introBlock', {
   content: [...IntroFields],
-  presentation: [containerWidth, contentAlignment],
+  presentation: [Width, ItemAlignment],
 });

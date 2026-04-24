@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+import { Width } from '../config/width';
+
 export const AccordionBlock: Block = {
   slug: 'accordionBlock',
   fields: [
@@ -29,5 +31,6 @@ export const AccordionBlock: Block = {
         },
       ],
     },
+    Width,
   ],
 };

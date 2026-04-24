@@ -1,4 +1,4 @@
-import { contentAlignment } from './config/presentation';
+import { Background } from './config/background';
 import { AccordionBlock } from './elements/accordion';
 import { ButtonBlock } from './elements/button';
 import { IntroBlock } from './elements/intro';
@@ -11,11 +11,6 @@ export const HeroBlock = createBlockWithConfig('heroBlock', {
       type: 'blocks',
       blocks: [IntroBlock, AccordionBlock, ButtonBlock],
     },
-    {
-      name: 'background',
-      type: 'upload',
-      relationTo: 'media',
-    },
   ],
-  presentation: [contentAlignment],
+  presentation: [Background],
 });

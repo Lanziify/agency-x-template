@@ -1,4 +1,4 @@
-import { containerWidth } from '../config/presentation';
+import { Width } from '../config/width';
 import { createBlockWithConfig } from '../util';
 
 export const MediaBlock = createBlockWithConfig('mediaBlock', {
@@ -30,5 +30,5 @@ export const MediaBlock = createBlockWithConfig('mediaBlock', {
       },
     },
   ],
-  presentation: [containerWidth],
+  presentation: [Width],
 });

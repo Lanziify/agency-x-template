@@ -9,12 +9,12 @@ import { PageBlock } from '../types';
 import { DynamicIcon, IconName } from 'lucide-react/dynamic';
 
 export const ButtonBlock: React.FC<PageBlock['buttonBlock']> = (props) => {
-  const { href, label, variant, size, icon, iconPosition } = props;
+  const { href, label, variant, size, iconPosition } = props;
 
   return (
     <Button className={cn({ 'flex-row-reverse': iconPosition === 'right' })} variant={variant} size={size} asChild>
       <Link href={href}>
-        {icon && <DynamicIcon name={icon as IconName} />}
+        {/* {icon && <DynamicIcon name={icon as IconName} />} */}
         {label}
       </Link>
     </Button>

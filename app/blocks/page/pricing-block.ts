@@ -69,5 +69,5 @@ export const PricingBlock = createBlockWithConfig('pricingBlock', {
       ],
     },
   ],
-  presentation: [contentAlignment],
+  presentation: [],
 });

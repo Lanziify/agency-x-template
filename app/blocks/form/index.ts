@@ -1,4 +1,4 @@
-import { contentAlignment } from '@blocks/page/config/presentation';
+import { ItemAlignment } from '@blocks/page/config/alignment';
 import { IntroFields } from '@blocks/page/elements/intro';
 import { createBlockWithConfig } from '@blocks/page/util';
 
@@ -12,5 +12,5 @@ export const FormBlock = createBlockWithConfig('formBlock', {
       required: true,
     },
   ],
-  presentation: [contentAlignment],
+  presentation: [ItemAlignment],
 });

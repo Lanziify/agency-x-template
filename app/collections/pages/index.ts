@@ -26,7 +26,7 @@ export const Pages: CollectionConfig = {
   },
   versions: {
     drafts: {
-      autosave: true,
+      // autosave: true,
       schedulePublish: true,
     },
   },
