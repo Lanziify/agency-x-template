@@ -12,7 +12,7 @@ const slugField: SlugField = (args) => ({
       admin: {
         components: {
           Field: {
-            path: '@components/shared/slug-field',
+            path: '@components/custom-fields/slug-field',
             clientProps: { ...args },
           },
         },

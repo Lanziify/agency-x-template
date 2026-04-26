@@ -22,7 +22,7 @@ export const Width: Field = {
       admin: {
         components: {
           Field: {
-            path: '@components/shared/container-width-field',
+            path: '@components/custom-fields/container-width-field',
           },
         },
       },

@@ -41,7 +41,7 @@ export const ButtonBlock = createBlockWithConfig('buttonBlock', {
           admin: {
             components: {
               Field: {
-                path: '@components/custom-fields/drawer-test',
+                path: '@components/custom-fields/icon-picker',
               },
             },
           },
